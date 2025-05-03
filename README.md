@@ -1,127 +1,150 @@
 # 💼 Wallet System
 
-A full-stack application for managing digital wallets and transactions.
+A full-stack MERN application for managing digital wallets and transactions.
 
 ---
 
-## 🛠️ Backend
+## 🌐 Deployments
 
-* **Backend Deployment**: [https://walletsystem-u93y.onrender.com](https://walletsystem-u93y.onrender.com)
-* **Frontend Deployment**: [https://wallet-system-hpl9.vercel.app](https://wallet-system-hpl9.vercel.app)
+* **Backend**: [https://walletsystem-u93y.onrender.com](https://walletsystem-u93y.onrender.com)
+* **Frontend**: [https://wallet-system-hpl9.vercel.app](https://wallet-system-hpl9.vercel.app)
 
-### 📘 API Endpoints
+---
 
-#### 1. Initialize Wallet
+## ⚙️ Tech Stack
+
+* **Frontend**: React (Vite), React Router, Axios, Bootstrap, MUI DataGrid
+* **Backend**: Node.js, Express, MongoDB, Mongoose, Decimal.js
+* **Database**: MongoDB
+
+---
+
+## 📘 API Endpoints
+
+### 1. Initialize Wallet
 
 * **Method**: `POST`
-
 * **Endpoint**: `/api/setup`
 
-* **Request**:
+**Request**:
 
-  ```json
-  {
-    "name": "My Wallet",
-    "balance": 100.5000
-  }
-  ```
+```json
+{
+  "name": "My Wallet",
+  "balance": 100.5000
+}
+```
 
-* **Response**:
+**Response**:
 
-  ```json
-  {
-    "id": "65a1b2c3d4e5f6g7h8i9j0k",
-    "name": "My Wallet",
-    "balance": 100.5000,
-    "transactionId": "65a1b2c3d4e5f6g7h8i9j0l",
-    "date": "2024-01-15T12:34:56.789Z"
-  }
-  ```
+```json
+{
+  "id": "65a1b2c3d4e5f6g7h8i9j0k",
+  "name": "My Wallet",
+  "balance": 100.5000,
+  "transactionId": "65a1b2c3d4e5f6g7h8i9j0l",
+  "date": "2024-01-15T12:34:56.789Z"
+}
+```
 
-#### 2. Credit/Debit Transaction
+---
+
+### 2. Credit/Debit Transaction
 
 * **Method**: `POST`
-
 * **Endpoint**: `/api/transactions/:walletId`
 
-* **Request**:
+**Request**:
 
-  ```json
-  {
-    "amount": 50.2500,
-    "description": "Recharge"
-  }
-  ```
+```json
+{
+  "amount": 50.2500,
+  "description": "Recharge"
+}
+```
 
-* **Response**:
+**Response**:
 
-  ```json
-  {
-    "balance": 150.7500,
-    "transactionId": "65a1b2c3d4e5f6g7h8i9j0m"
-  }
-  ```
+```json
+{
+  "balance": 150.7500,
+  "transactionId": "65a1b2c3d4e5f6g7h8i9j0m"
+}
+```
 
-#### 3. Get Transactions
+---
+
+### 3. Get Transactions
 
 * **Method**: `GET`
 * **Endpoint**: `/api/transactions?walletId=:walletId&skip=0&limit=10`
-* **Response**:
 
-  ```json
-  [
-    {
-      "id": "65a1b2c3d4e5f6g7h8i9j0m",
-      "amount": 50.2500,
-      "balance": 150.7500,
-      "description": "Recharge",
-      "type": "CREDIT",
-      "date": "2024-01-15T12:35:00.000Z"
-    }
-  ]
-  ```
+**Response**:
 
-#### 4. Get Wallet Details
+```json
+[
+  {
+    "id": "65a1b2c3d4e5f6g7h8i9j0m",
+    "amount": 50.2500,
+    "balance": 150.7500,
+    "description": "Recharge",
+    "type": "CREDIT",
+    "date": "2024-01-15T12:35:00.000Z"
+  }
+]
+```
+
+---
+
+### 4. Get Wallet Details
 
 * **Method**: `GET`
 * **Endpoint**: `/api/wallet/:id`
-* **Response**:
 
-  ```json
-  {
-    "id": "65a1b2c3d4e5f6g7h8i9j0k",
-    "name": "My Wallet",
-    "balance": 150.7500,
-    "date": "2024-01-15T12:34:56.789Z"
-  }
-  ```
+**Response**:
 
----
-
-### ⚙️ Backend Setup Instructions
-
-1. **Install dependencies**:
-
-   ```bash
-   cd backend
-   npm install
-   ```
-
-2. **Create `.env` file** and add all the required environment variables.
-
-3. **Start the server**:
-
-   ```bash
-   npm start
-   ```
+```json
+{
+  "id": "65a1b2c3d4e5f6g7h8i9j0k",
+  "name": "My Wallet",
+  "balance": 150.7500,
+  "date": "2024-01-15T12:34:56.789Z"
+}
+```
 
 ---
 
-### 🗄️ Database Design
+## ⚙️ Backend Setup Instructions
 
-**MongoDB** with 2 collections:
+1. Navigate to the backend folder:
 
-#### 🪪 Wallet Collection
+```bash
+cd backend
+npm install
+```
+
+2. Create a `.env` file with the following variables:
+
+```
+MONGO_URI=<your_mongodb_uri>
+PORT=5000
+RATE_LIMITING_WINDOW=15
+RATE_LIMITING_MAX=100
+NODE_ENV=development
+FRONTEND_URL=http://localhost:5173
+```
+
+3. Start the backend server:
+
+```bash
+npm start
+```
+
+---
+
+## 🗄️ Database Design
+
+### Wallet Collection
 
 ```js
 {
@@ -131,7 +154,7 @@ A full-stack application for managing digital wallets and transactions.
 }
 ```
 
-#### 💰 Transaction Collection
+### Transaction Collection
 
 ```js
 {
@@ -146,141 +169,74 @@ A full-stack application for managing digital wallets and transactions.
 
 **Optimizations**:
 
-* Use of `Decimal128` for precise financial calculations.
-* Indexes on `walletId` for fast lookups.
-* Atomic updates for transaction and balance integrity.
+* Used `Decimal128` for accurate currency calculations
+* Indexed `walletId` for optimized queries
+* Ensured atomic operations to maintain data consistency
 
 ---
 
-## 🌐 Frontend
+## 🌐 Frontend Setup Instructions
 
-### 📡 API Consumption
+1. Navigate to the frontend folder:
 
-* **Base URL**: `http://localhost:5173/api`
+```bash
+cd frontend
+npm install
+```
 
-#### Endpoints:
+2. Start the development server:
 
-```js
-// Initialize Wallet
-POST /setup
+```bash
+npm run dev
+```
 
-// Create Transaction
-POST /transact/:walletId
+3. Optional `.env` configuration:
 
-// Get Transactions
-GET /transactions?walletId=:id
-
-// Get Wallet
-GET /wallet/:id
+```env
+VITE_API_URL=http://localhost:5000
 ```
 
 ---
 
-### ⚙️ Frontend Setup Instructions
-
-1. **Install dependencies**:
-
-   ```bash
-   cd frontend
-   npm install
-   ```
-
-2. **Start development server**:
-
-   ```bash
-   npm run dev
-   ```
-
-3. **Optional**: Configure API base URL in `.env`:
-
-   ```env
-   VITE_API_URL=http://localhost:5000
-   ```
-
----
-
-### 🧠 Application Design
+## 🧠 Application Design
 
 * **State Management**: React Context API
-* **Local Storage**: For wallet data persistence
-* **Key Components**:
+* **Persistence**: Wallet data is stored in local storage
+* **Main Components**:
 
-  * `WalletSetup`: Initial wallet creation
-  * `TransactionForm`: Handles credits/debits
-  * `Transactions`: Lists wallet transactions
-
----
-
-### 🎨 UI Libraries
-
-* React Bootstrap (Layout and forms)
-* MUI DataGrid (Transaction table)
-* React Icons (Visual indicators)
+  * `WalletSetup`: Create a new wallet
+  * `TransactionForm`: Handle credit/debit
+  * `Transactions`: Display transaction history
 
 ---
 
-### 🚨 Error Handling
+## 🎨 UI Libraries
 
-* Inline validation for form fields
-* Global toast messages for errors
-* API error boundaries for safe API access
-
----
-
-## 🧰 Technologies Used
-
-### Backend
-
-* Node.js
-* Express
-* MongoDB
-* Mongoose
-* Decimal.js
-
-### Frontend
-
-* React
-* React Router
-* Axios
-* Bootstrap
-* MUI DataGrid
+* React Bootstrap – UI forms and layout
+* MUI DataGrid – Tabular transaction history
+* React Icons – Enhanced visuals and icons
 
 ---
 
-## 🚀 Running the Project
+## 🚨 Error Handling
 
-1. **Start MongoDB** service
-
-2. Open separate terminals for backend and frontend:
-
-   ```bash
-   # Backend
-   cd backend
-   npm start
-   ```
-
-   ```bash
-   # Frontend
-   cd frontend
-   npm run dev
-   ```
-
-3. **Access the app** at: [http://localhost:5173](http://localhost:5173)
+* Form validation with inline messages
+* Global error toasts for user feedback
+* Safe API calls using try/catch with boundaries
 
 ---
 
 ## 🧪 Testing APIs
 
-You can use **Postman** or `curl` to test the APIs. Refer to the examples in the [API Endpoints](#api-endpoints) section.
+Use **Postman** or `curl` to test APIs. Refer to the [API Endpoints](#api-endpoints) section above.
 
 ---
 
 ## ✅ Features Summary
 
-* Create wallets with initial balances
-* Record and retrieve credit/debit transactions
-* View real-time updated wallet balance
-* Persist wallet data in local storage
-* User-friendly interface with responsive UI
-* Proper error handling for smooth UX
-
+* Initialize wallet with starting balance
+* Perform credit/debit transactions
+* View wallet info and transaction history
+* React-based responsive UI
+* Robust error handling
+* Full deployment and hosting
