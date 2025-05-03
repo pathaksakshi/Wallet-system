@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 
 import { WalletProvider } from './context/WalletContext'
-import Dashboard from './pages/ Dashboard'
+import Dashboard from './pages/Dashboard'
 import WalletSetup from './pages/WalletSetup'
 import Transactions from './pages/Transactions'
 import NavBar from './components/NavBar'

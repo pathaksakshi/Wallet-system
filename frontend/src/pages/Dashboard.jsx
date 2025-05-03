@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Card, Container, Button } from 'react-bootstrap'
 import { useWallet } from '../context/WalletContext'
@@ -6,6 +6,7 @@ import TransactionForm from '../components/TransactionForm'
 
 export default function Dashboard() {
   const { wallet } = useWallet()
+    const [apiError, setApiError] = useState('')
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -24,7 +25,8 @@ export default function Dashboard() {
           <div className="text-center mt-4">
             <Button 
               variant="outline-secondary" 
-              href="/transactions"
+              // href="/transactions"
+              onClick={(e)=>{e.preventDefault(); navigate('/transactions')}}
               size="lg"
             >
               View Transaction History
