@@ -1,24 +1,36 @@
 import { useState } from 'react'
-import { Form, Button, Card, Stack } from 'react-bootstrap'
+import { Form, Button, Card, Stack, Alert } from 'react-bootstrap'
 import { useWallet } from '../context/WalletContext'
 
 export default function TransactionForm() {
   const [amount, setAmount] = useState('')
+  const [apiError, setApiError] = useState('')
   const [description, setDescription] = useState('')
   const [type, setType] = useState('CREDIT')
-  const { makeTransaction } = useWallet()
+  
+  const { makeTransaction ,wallet} = useWallet()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setApiError('')
+    try {
     const transactionAmount = type === 'CREDIT' ? Math.abs(amount) : -Math.abs(amount)
+    if (type === 'DEBIT' && Math.abs(amount) > wallet.balance) {
+      setApiError('Insufficient balance for this transaction');
+      return;
+    }
     await makeTransaction(transactionAmount, description)
     setAmount('')
     setDescription('')
+    } catch (error) {
+      setApiError(error.message || 'There was some Error while creating transaction. Please try again.')
+    }
   }
 
   return (
     <Card className="mb-4">
       <Card.Body>
+      {apiError && <Alert variant="danger" className="mb-4">{apiError}</Alert>}
         <Card.Title className="mb-4">New Transaction</Card.Title>
         <Form onSubmit={handleSubmit}>
           <Stack gap={3}>
@@ -43,7 +55,10 @@ export default function TransactionForm() {
                 type="number"
                 step="0.0001"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={(e) => {
+                  const validValue = e.target.value.replace(/[^0-9.]/g, '');
+                  setAmount(validValue);
+                }}
                 required
               />
             </Form.Group>

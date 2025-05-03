@@ -8,6 +8,7 @@ export default function WalletSetup() {
   const [balance, setBalance] = useState('0') // Initialize with '0'
   const [errors, setErrors] = useState({})
   const [apiError, setApiError] = useState('')
+  const [showSuccess, setShowSuccess] = useState(false);
   const { createWallet } = useWallet()
   const navigate = useNavigate()
 
@@ -39,7 +40,10 @@ export default function WalletSetup() {
       // Convert empty string to 0, otherwise use parsed value
       const balanceValue = balance === '' ? 0 : parseFloat(balance)
       await createWallet(name, balanceValue)
-      navigate('/')
+      setShowSuccess(true);
+      setTimeout(() => {
+        navigate('/');
+      }, 2000);
     } catch (error) {
       setApiError(error.message || 'Failed to create wallet. Please try again.')
     }
@@ -47,6 +51,11 @@ export default function WalletSetup() {
 
   return (
     <Container className="mt-5" style={{ maxWidth: '600px' }}>
+      {showSuccess && (
+        <Alert variant="success" className="mb-4">
+          Wallet created successfully! Redirecting to dashboard...
+        </Alert>
+      )}
       <Card>
         <Card.Body>
           <Card.Title className="mb-4 text-center">Create New Wallet</Card.Title>
