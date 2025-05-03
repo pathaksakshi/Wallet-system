@@ -1,5 +1,3 @@
-
-````markdown
 # 💼 Wallet System
 
 A full-stack application for managing digital wallets and transactions.
@@ -8,19 +6,25 @@ A full-stack application for managing digital wallets and transactions.
 
 ## 🛠️ Backend
 
+* **Backend Deployment**: [https://walletsystem-u93y.onrender.com](https://walletsystem-u93y.onrender.com)
+* **Frontend Deployment**: [https://wallet-system-hpl9.vercel.app](https://wallet-system-hpl9.vercel.app)
+
 ### 📘 API Endpoints
 
 #### 1. Initialize Wallet
 
-- **Method**: `POST`
-- **Endpoint**: `/api/setup`
-- **Request**:
+* **Method**: `POST`
+
+* **Endpoint**: `/api/setup`
+
+* **Request**:
+
   ```json
   {
     "name": "My Wallet",
     "balance": 100.5000
   }
-````
+  ```
 
 * **Response**:
 
@@ -37,7 +41,9 @@ A full-stack application for managing digital wallets and transactions.
 #### 2. Credit/Debit Transaction
 
 * **Method**: `POST`
-* **Endpoint**: `/api/transact/:walletId`
+
+* **Endpoint**: `/api/transactions/:walletId`
+
 * **Request**:
 
   ```json
@@ -46,6 +52,7 @@ A full-stack application for managing digital wallets and transactions.
     "description": "Recharge"
   }
   ```
+
 * **Response**:
 
   ```json
@@ -91,7 +98,7 @@ A full-stack application for managing digital wallets and transactions.
 
 ---
 
-### ⚙️ Setup Instructions (Backend)
+### ⚙️ Backend Setup Instructions
 
 1. **Install dependencies**:
 
@@ -169,7 +176,7 @@ GET /wallet/:id
 
 ---
 
-### ⚙️ Setup Instructions (Frontend)
+### ⚙️ Frontend Setup Instructions
 
 1. **Install dependencies**:
 
@@ -246,20 +253,19 @@ GET /wallet/:id
 
 2. Open separate terminals for backend and frontend:
 
-```bash
-# Backend
-cd backend
-npm start
-```
+   ```bash
+   # Backend
+   cd backend
+   npm start
+   ```
 
-```bash
-# Frontend
-cd frontend
-npm run dev
-```
+   ```bash
+   # Frontend
+   cd frontend
+   npm run dev
+   ```
 
-3. **Access the app** at:
-   [http://localhost:5173](http://localhost:5173)
+3. **Access the app** at: [http://localhost:5173](http://localhost:5173)
 
 ---
 
