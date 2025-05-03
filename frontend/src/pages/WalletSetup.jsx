@@ -59,7 +59,13 @@ export default function WalletSetup() {
               <Form.Control
                 type="text"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Block input if it contains numbers
+                  if (!/\d/.test(value)) {
+                    setName(value);
+                  }
+                }}
                 isInvalid={!!errors.name}
                 required
               />
