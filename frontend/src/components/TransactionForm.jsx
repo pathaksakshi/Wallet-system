@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Form, Button, Card, Stack, Alert } from 'react-bootstrap'
+import { Form, Button, Card, Stack, Alert, Spinner } from 'react-bootstrap'
 import { useWallet } from '../context/WalletContext'
 
 export default function TransactionForm() {
@@ -8,7 +8,7 @@ export default function TransactionForm() {
   const [description, setDescription] = useState('')
   const [type, setType] = useState('CREDIT')
   
-  const { makeTransaction ,wallet} = useWallet()
+  const { makeTransaction ,wallet,loading} = useWallet()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -74,7 +74,22 @@ export default function TransactionForm() {
             </Form.Group>
 
             <Button variant="primary" type="submit" className="w-100">
-              Submit Transaction
+            {loading ? (
+          <>
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+              className="me-2"
+            />
+            Processing...
+          </>
+        ) : (
+          'Submit Transaction'
+        )}
+              {/* Submit Transaction */}
             </Button>
           </Stack>
         </Form>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Form, Button, Container, Card, Alert } from 'react-bootstrap'
+import { Form, Button, Container, Card, Alert, Spinner } from 'react-bootstrap'
 import { useWallet } from '../context/WalletContext'
 
 export default function WalletSetup() {
@@ -9,7 +9,7 @@ export default function WalletSetup() {
   const [errors, setErrors] = useState({})
   const [apiError, setApiError] = useState('')
   const [showSuccess, setShowSuccess] = useState(false);
-  const { createWallet } = useWallet()
+  const { createWallet,loading } = useWallet()
   const navigate = useNavigate()
 
   const validateForm = () => {
@@ -100,7 +100,22 @@ export default function WalletSetup() {
 
             <div className="d-grid">
               <Button variant="primary" type="submit" size="lg">
-                Create Wallet
+              {loading ? (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                    className="me-2"
+                  />
+                  Creating...
+                </>
+              ) : (
+                'Create Wallet'
+              )}
+                {/* Create Wallet */}
               </Button>
             </div>
           </Form>

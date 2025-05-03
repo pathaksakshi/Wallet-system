@@ -10,6 +10,7 @@ export const WalletProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : null
   })
   const [transactions, setTransactions] = useState([])
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if(wallet) {
@@ -19,29 +20,48 @@ export const WalletProvider = ({ children }) => {
   }, [wallet])
 
   const fetchTransactions = async () => {
-    const { data } = await apiClient.get(`/api/transactions?walletId=${wallet.id}`)
+    setLoading(true);
+    try{
+      const { data } = await apiClient.get(`/api/transactions?walletId=${wallet.id}`)
     setTransactions(data)
+    }finally{
+      setLoading(false)
+    }
   }
 
   const createWallet = async (name, balance) => {
-    const { data } = await apiClient.post(`/api/setup`, { name, balance })
-    setWallet(data)
-    return data
+    setLoading(true);
+    try{
+      const { data } = await apiClient.post(`/api/setup`, { name, balance })
+      setWallet(data)
+      return data
+    }finally{
+      setLoading(false)
+    }
+   
   }
 
   const makeTransaction = async (amount, description) => {
-    const { data } = await apiClient.post(`/api/transactions/${wallet.id}`, {
-      amount: Number(amount),
-      description
-    })
-    setWallet(prev => ({ ...prev, balance: data.balance }))
-    fetchTransactions()
-    return data
+    setLoading(true);
+    try{
+      const { data } = await apiClient.post(`/api/transactions/${wallet.id}`, {
+        amount: Number(amount),
+        description
+      })
+      setWallet(prev => ({ ...prev, balance: data.balance }))
+      fetchTransactions()
+      return data
+    }finally{
+      setLoading(false)
+    }
+  
   }
 
   return (
     <WalletContext.Provider value={{ 
       wallet, 
+      loading,
+      setLoading,
       transactions,
       createWallet, 
       makeTransaction 
