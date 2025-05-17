@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  backend:
+    image: sakshipathak/walletsystem-images:ws-backend-staging
+    container_name: wallet-backend
+    ports:
+      - '3002:3002'
+    env_file:
+      - ./backend/.env
+    restart: always
+
+  frontend:
+    image: sakshipathak/walletsystem-images:ws-frontend-staging
+    container_name: wallet-frontend
+    ports:
+      - '5173:5173'
+    depends_on:
+      - backend
+    restart: always
