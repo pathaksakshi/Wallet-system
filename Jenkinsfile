@@ -16,6 +16,7 @@ pipeline {
     stage('Build Images') {
       steps {
         script {
+           sh 'docker --version'
           sh 'docker compose -f docker-compose.yml build'
         }
       }
