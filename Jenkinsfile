@@ -14,6 +14,15 @@ pipeline {
       }
     }
 
+    stage('Use Env File') {
+      steps {
+        // Copy the env file from credentials to the backend folder
+        withCredentials([file(credentialsId: 'backend-env-file', variable: 'ENV_FILE')]) {
+          sh 'cp $ENV_FILE backend/backend.env'
+        }
+      }
+    }
+
     stage('Build Images') {
       steps {
         script {
