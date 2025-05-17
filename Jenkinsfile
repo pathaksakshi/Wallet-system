@@ -3,8 +3,8 @@ pipeline {
 
   environment {
     PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
-    DOCKER_REPO = 'sakshipathak/walletsystem-images'
+    // DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
+    // DOCKER_REPO = 'sakshipathak/walletsystem-images'
   }
 
   stages {
@@ -23,22 +23,34 @@ pipeline {
       }
     }
 
-    stage('Docker Hub Login & Push') {
+    stage('Run Containers') {
       steps {
         script {
-          sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-          sh 'docker push $DOCKER_REPO:ws-frontend-staging'
-          sh 'docker push $DOCKER_REPO:ws-backend-staging'
-        }
-      }
-    }
+          // Optional: Stop and remove existing containers
+          sh 'docker compose -f docker-compose.yml down'
 
-    stage('Deploy via Docker Compose') {
-      steps {
-        script {
+          // Start new containers
           sh 'docker compose -f docker-compose.yml up -d'
         }
       }
     }
+
+    // stage('Docker Hub Login & Push') {
+    //   steps {
+    //     script {
+    //       sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+    //       sh 'docker push $DOCKER_REPO:ws-frontend-staging'
+    //       sh 'docker push $DOCKER_REPO:ws-backend-staging'
+    //     }
+    //   }
+    // }
+
+    // stage('Deploy via Docker Compose') {
+    //   steps {
+    //     script {
+    //       sh 'docker compose -f docker-compose.yml up -d'
+    //     }
+    //   }
+    // }
   }
 }
