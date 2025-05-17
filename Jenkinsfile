@@ -18,7 +18,7 @@ pipeline {
       steps {
         // Copy the env file from credentials to the backend folder
         withCredentials([file(credentialsId: 'backend-env-file', variable: 'ENV_FILE')]) {
-          sh 'cp $ENV_FILE backend/backend.env'
+          sh 'cp $ENV_FILE backend/.env'
         }
       }
     }
