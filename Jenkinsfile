@@ -2,6 +2,7 @@ pipeline {
   agent any
 
   environment {
+    PATH = "/opt/homebrew/bin/docker"
     DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
     DOCKER_REPO = 'sakshipathak/walletsystem-images'
   }
