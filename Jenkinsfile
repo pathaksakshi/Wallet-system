@@ -19,6 +19,9 @@ pipeline {
         // Copy the env file from credentials to the backend folder
         withCredentials([file(credentialsId: 'backend-env-file', variable: 'ENV_FILE')]) {
         //   sh 'cp $ENV_FILE backend/.env'
+        /*tee writes the file as the current Jenkins process.
+        It avoids the permission error that cp can cause in restricted environments.
+        The output redirection (> /dev/null) prevents secret leakage in logs.*/
         sh 'mkdir -p backend'
         sh 'chmod -R u+w backend'
         sh 'cat $ENV_FILE | tee backend/.env > /dev/null'
