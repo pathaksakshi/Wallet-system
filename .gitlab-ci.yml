@@ -1,0 +1,32 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_TLS_CERTDIR: ""  # Required to disable TLS issues in DinD
+
+stages:
+  - build
+  - deploy
+
+before_script:
+  - echo "Using GitLab CI/CD for staging branch"
+  - apk add --no-cache bash git
+
+build:
+  stage: build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "staging"'
+  script:
+    - echo "Cloning submodules if any"
+    - docker --version
+    - echo "$BACKEND_ENV" > backend/.env
+    - docker compose -f docker-compose.yml build
+
+deploy:
+  stage: deploy
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "staging"'
+  script:
+    - docker compose -f docker-compose.yml up -d
