@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   backend:
+    platform: linux/amd64
     image: sakshipathak/walletsystem-images:ws-backend-staging
     container_name: wallet-backend
     ports:
@@ -11,6 +12,7 @@ services:
     restart: always
 
   frontend:
+    platform: linux/amd64
     image: sakshipathak/walletsystem-images:ws-frontend-staging
     container_name: wallet-frontend
     ports:
